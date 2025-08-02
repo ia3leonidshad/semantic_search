@@ -41,9 +41,9 @@ results = retriever.search("query text", k=5)
 
 ## Running evaluation and model creation
 
-Check out scripts folder [README](./sripts/README.md).
+Check out scripts folder [README](./scripts/README.md).
 
-More info in docs folder.
+More info in [docs folder](./docs/).
 
 ## Project Structure
 
