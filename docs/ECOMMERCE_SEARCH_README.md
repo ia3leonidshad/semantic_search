@@ -261,7 +261,7 @@ config = {
 
 Run the example script:
 ```bash
-python ecommerce_search_example.py
+python examples/ecommerce_search_example.py
 ```
 
 This will:

@@ -43,6 +43,8 @@ results = retriever.search("query text", k=5)
 
 Check out scripts folder [README](./scripts/README.md).
 
+Demo app [README](./docs/README_streamlit.md).
+
 More info in [docs folder](./docs/).
 
 ## Project Structure

@@ -167,10 +167,10 @@ Run the provided test scripts to verify the integration:
 
 ```bash
 # Basic functionality test
-python test_clip_integration.py
+python examples/test_clip_integration.py
 
 # Comprehensive example
-python clip_example.py
+python examples/clip_example.py
 ```
 
 ## Future Enhancements
