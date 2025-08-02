@@ -1,0 +1,136 @@
+# Configuration for embedding models
+# This file defines available embedding models and their parameters
+
+models:
+  sentence_transformers:
+    all-MiniLM-L6-v2:
+      type: "sentence_transformers"
+      model_name: "all-MiniLM-L6-v2"
+      dimension: 384
+      description: "Fast and efficient model, good for general purpose"
+      max_seq_length: 256
+      
+    all-mpnet-base-v2:
+      type: "sentence_transformers"
+      model_name: "all-mpnet-base-v2"
+      dimension: 768
+      description: "High quality embeddings, slower but more accurate"
+      max_seq_length: 384
+      
+    all-distilroberta-v1:
+      type: "sentence_transformers"
+      model_name: "all-distilroberta-v1"
+      dimension: 768
+      description: "Good balance of speed and quality"
+      max_seq_length: 512
+    
+    paraphrase-multilingual-mpnet-base-v2:
+      type: "sentence_transformers"
+      model_name: "sentence-transformers/paraphrase-multilingual-mpnet-base-v2"
+      dimension: 768
+      description: "multilingual"
+      max_seq_length: 256
+    
+    stsb-xlm-r-multilingual:
+      type: "sentence_transformers"
+      model_name: "sentence-transformers/stsb-xlm-r-multilingual"
+      dimension: 768
+      description: "multilingual"
+      max_seq_length: 128
+    
+    use-cmlm-multilingual:
+      type: "sentence_transformers"
+      model_name: "sentence-transformers/use-cmlm-multilingual"
+      dimension: 768
+      description: "multilingual"
+      max_seq_length: 256
+
+    sentence-transformer-ult5-pt-small:
+      type: "sentence_transformers"
+      model_name: "tgsc/sentence-transformer-ult5-pt-small"
+      dimension: 512
+      description: "multilingual"
+      max_seq_length: 256
+
+    sentence-transformers-clip-ViT-B-32-multilingual-v1:
+      type: "sentence_transformers"
+      model_name: "sentence-transformers/clip-ViT-B-32-multilingual-v1"
+      image_model_name: "clip-ViT-B-32"
+      dimension: 512
+      description: "CLIP model for joint text-image embeddings using sentence-transformers"
+      max_seq_length: 256
+      supports_text: true
+      supports_images: true
+    
+    sentence-transformers-jina-clip-v2:
+      type: "sentence_transformers"
+      model_name: "jinaai/jina-clip-v2"
+      image_model_name: "jinaai/jina-clip-v2"
+      dimension: 1024
+      description: "CLIP model for joint text-image embeddings using sentence-transformers"
+      max_seq_length: 256
+      supports_text: true
+      supports_images: true
+
+  openai:
+    text-embedding-3-small:
+      type: "openai"
+      model_name: "text-embedding-3-small"
+      dimension: 1536
+      description: "OpenAI's small embedding model"
+      requires_api_key: true
+      
+    text-embedding-3-large:
+      type: "openai"
+      model_name: "text-embedding-3-large"
+      dimension: 3072
+      description: "OpenAI's large embedding model, highest quality"
+      requires_api_key: true
+
+  huggingface:
+    e5-base-v2:
+      type: "huggingface"
+      model_name: "intfloat/e5-base-v2"
+      dimension: 768
+      description: "E5 model, good for retrieval tasks"
+      max_seq_length: 512
+      prefix: "query: "  # Required prefix for queries
+      
+    bge-base-en-v1.5:
+      type: "huggingface"
+      model_name: "BAAI/bge-base-en-v1.5"
+      dimension: 768
+      description: "BGE model, strong performance on retrieval"
+      max_seq_length: 512
+
+  clip:
+    openai-clip-vit-base-patch32:
+      type: "clip"
+      model_name: "openai/clip-vit-base-patch32"
+      dimension: 512
+      description: "CLIP model for joint text-image embeddings"
+      max_seq_length: 256
+      supports_text: true
+      supports_images: true
+      
+    openai-clip-vit-large-patch14:
+      type: "clip"
+      model_name: "openai/clip-vit-large-patch14"
+      dimension: 768
+      description: "Large CLIP model, higher quality embeddings"
+      max_seq_length: 256
+      supports_text: true
+      supports_images: true
+
+
+# Default model configuration
+default:
+  model_type: "sentence_transformers"
+  model_name: "all-MiniLM-L6-v2"
+  
+# Model-specific settings
+settings:
+  cache_embeddings: true
+  normalize_embeddings: true
+  batch_size: 32
+  # device: "auto"  # auto, cpu, cuda

@@ -1,0 +1,26 @@
+# LLM Model Configurations
+models:
+  openai:
+    gpt-4.1-mini:
+      model_name: "gpt-4.1-mini"
+      base_url: "https://pd67dqn1bd.execute-api.eu-west-1.amazonaws.com"
+      temperature: 0.6
+      max_tokens: null
+      service_tier: "auto"
+      verify_ssl: false
+      description: "GPT-4.1 Mini model for text generation and completion"
+
+    gpt-4.1:
+      model_name: "gpt-4.1"
+      base_url: "https://pd67dqn1bd.execute-api.eu-west-1.amazonaws.com"
+      temperature: 0.6
+      max_tokens: null
+      service_tier: "auto"
+      verify_ssl: false
+      description: "GPT-4.1 model for text generation and completion"
+
+
+# Default LLM model configuration
+default:
+  type: "openai"
+  model_name: "gpt-4.1-mini"
