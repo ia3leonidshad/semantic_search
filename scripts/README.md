@@ -152,7 +152,6 @@ python scripts/extract_features_cli.py \
 ### Train re-ranker model
 
 ```bash
-# Basic feature extraction
 python scripts/train_xgboost.py \
   --train-features data/processed/features_train.csv \
   --val-features data/processed/features_val.csv \

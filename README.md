@@ -27,6 +27,83 @@ Demo app [README](./docs/README_streamlit.md).
 
 More info in [docs folder](./docs/).
 
+### Scripts to reproduce results
+
+Put `data/raw/queries.csv`, `data/raw/5k_items_curated.csv`.
+
+```bash
+mkdir -p data/raw/images
+mkdir -p data/processed
+mkdir -p data/indicies
+
+# Download images
+python scripts/download_images.py -i data/raw/5k_items_curated.csv -o data/raw/images/ --verbose
+
+# Generate queries for train set
+python scripts/generate_queries_cli.py \
+  --mode from_examples \
+  --examples-csv data/raw/queries.csv \
+  --output data/processed/generated_queries.csv \
+  --count 100
+
+# Query expansion
+python scripts/expand_queries_cli.py \
+  --input data/raw/queries.csv \
+  --output data/processed/expanded_queries.csv
+
+# Query expansion for train
+python scripts/expand_queries_cli.py \
+  --input data/raw/generated_queries.csv \
+  --output data/processed/expanded_queries_generated.csv
+
+# Create base retrievers and candidate sets
+python scripts/create_retrievers.py  \
+  data/processed/expanded_queries.csv  \
+  data/raw/5k_items_curated.csv  \
+  data/processed/results_3_retrievers.json
+
+# For train set
+python scripts/create_retrievers.py  \
+  data/processed/expanded_queries_generated.csv  \
+  data/raw/5k_items_curated.csv  \
+  data/processed/results_3_retrievers_generated.json
+
+# Label the results
+python scripts/create_ground_truth.py  \
+  data/processed/results_3_retrievers.json \
+  data/raw/5k_items_curated.csv  \
+  data/processed/ground_truth_final.json  
+
+# For train set
+python scripts/create_ground_truth.py  \
+  data/processed/results_3_retrievers_generated.json \
+  data/raw/5k_items_curated.csv  \
+  data/processed/ground_truth_final_generated.json  
+
+# Generate features
+python scripts/extract_features_cli.py \
+  --retriever-results data/processed/results_3_retrievers.json \
+  --item-data data/raw/5k_items_curated.csv \
+  --ground-truth data/processed/ground_truth_final.json \
+  --output data/processed/features_val.csv
+
+# For train set
+python scripts/extract_features_cli.py \
+  --retriever-results data/processed/results_3_retrievers_generated.json \
+  --item-data data/raw/5k_items_curated.csv \
+  --ground-truth data/processed/ground_truth_final_generated.json \
+  --output data/processed/features_train.csv
+
+# Train re-ranker and get the results
+python scripts/train_xgboost.py \
+  --train-features data/processed/features_train.csv \
+  --val-features data/processed/features_val.csv \
+  --output-results data/processed/results_xgb_val.json
+
+# Evaluate final results. Path are hardcoded, check the script
+python scripts/evaluate_retrievers.py
+```
+
 ## Project Structure
 
 ```
